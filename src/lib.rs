@@ -103,4 +103,36 @@ mod tests {
 
         assert_eq!(output, expected);
     }
+
+    #[test]
+    fn test3() {
+        let lex = std::fs::read_to_string("src/test/test_lex3.txt").unwrap();
+        let file = std::fs::read_to_string("src/test/test_file3.txt").unwrap();
+
+        let output = tokenize(&lex, &file).unwrap();
+
+        let expected = vec![
+            Token::new("raw".to_string(), "T".to_string()),
+            Token::new("LIT".to_string(), "his".to_string()),
+            Token::new("LIT".to_string(), "doesn".to_string()),
+            Token::new("raw".to_string(), "'".to_string()),
+            Token::new("LIT".to_string(), "t".to_string()),
+            Token::new("LIT".to_string(), "su".to_string()),
+            Token::new("raw".to_string(), "P".to_string()),
+            Token::new("raw".to_string(), "P".to_string()),
+            Token::new("LIT".to_string(), "ort".to_string()),
+            Token::new("LIT".to_string(), "c".to_string()),
+            Token::new("raw".to_string(), "A".to_string()),
+            Token::new("LIT".to_string(), "pit".to_string()),
+            Token::new("raw".to_string(), "A".to_string()),
+            Token::new("raw".to_string(), "L".to_string()),
+            Token::new("LIT".to_string(), "le".to_string()),
+            Token::new("raw".to_string(), "T".to_string()),
+            Token::new("LIT".to_string(), "t".to_string()),
+            Token::new("raw".to_string(), "E".to_string()),
+            Token::new("LIT".to_string(), "rs".to_string()),
+        ];
+
+        assert_eq!(output, expected);
+    }
 }
