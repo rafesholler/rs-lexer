@@ -1,0 +1,1 @@
+This tests words and integers like 9000 -7474 and 22222
