@@ -19,22 +19,40 @@ pub fn tokenize(data: String, file: String) -> Result<Vec<Token>, Box<dyn Error>
     }
 
     let mut tokens = vec![];
-    let split_file = file.split_whitespace();
 
-    for word in split_file {
+    let mut i = 0;
+
+    while i < file.len() {
         let mut found = false;
         for t_pattern in &token_patterns {
+            if (i + t_pattern.0.len() - 2) >= file.len() {
+                continue;
+            }
+
+            let word = &file[i..(i + t_pattern.0.len() - 2)];            
             let re = Regex::new(&t_pattern.0)?;
             if re.is_match(word) {
                 tokens.push(Token::new(t_pattern.1.to_string(), word.to_owned()));
                 found = true;
+                i += word.len();
                 break;
             }
         }
         if !found {
-            tokens.push(Token::new("RAW".to_owned(), word.to_owned()));
+            i += 1;
+            tokens.push(Token::new("RAW".to_string(), file[i..i+1].to_string()))
         }
     }
 
     Ok(tokens)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_empty() {
+        assert_eq!(tokenize(String::new(), String::new()).unwrap(), vec![]);
+    }
 }

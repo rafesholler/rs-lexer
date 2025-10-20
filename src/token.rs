@@ -1,3 +1,4 @@
+#[derive(PartialEq, Debug)]
 pub struct Token {
     name: String,
     value: String,
